@@ -4,6 +4,7 @@ const client = require('../models/client');
 module.exports = {
     authToken : async function(req,res, next) {
         let token = req.header('authorization');
+        if(token){
         jwt.verify(token, process.env.SECRETKEY, async (err, data) => {
             if(err) {
                 console.log("Error in middleware",err);
@@ -22,5 +23,8 @@ module.exports = {
                 }
             }
         })
+        } else {
+            res.redirect('/');
+        }
    },
 }
